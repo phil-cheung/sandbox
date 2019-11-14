@@ -1,3 +1,4 @@
+/* This code parallelize matrix multiplication using the tiled method */
 #include <stdio.h>
 
 const int WIDTH = 16;           /* Width of square matrix */

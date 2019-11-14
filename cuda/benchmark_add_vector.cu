@@ -1,3 +1,4 @@
+/* This code benchmarks vector addition
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
@@ -7,17 +8,13 @@ const int BLOCKSIZE = 128;
 __global__
 void vecAddKernel(float* A, float* B, float* C, int n) {
     int i = threadIdx.x + blockDim.x * blockIdx.x;
-    int j;
-    float k;
-
-    for (j = 0; j < 10000000000; j++) {
-        k = 3.14 * 2.2223;
-    }
+    if (i < n) C[i] = A[i] + B[i];
 }
 
 
 void vecAdd(float* A, float* B, float* C, int n) {
     int size = n * sizeof(float);
+    int i;
     float *d_A, *d_B, *d_C;
 
     cudaMalloc((void **) &d_A, size);
@@ -28,9 +25,10 @@ void vecAdd(float* A, float* B, float* C, int n) {
 
     //Call Kernel function to add vector
     time_t a = time(NULL);
-    vecAddKernel<<<ceil(1.0*n/BLOCKSIZE), BLOCKSIZE>>>(d_A, d_B, d_C, n);
+    for (i=0; i<100000000; i++)
+        vecAddKernel<<<ceil(1.0*n/BLOCKSIZE), BLOCKSIZE>>>(d_A, d_B, d_C, n);
     time_t b = time(NULL);
-    printf("Time diff is %ld\n", b - a);
+    printf("Total time for all vector add iterations: %ld\n", b - a);
 
 
     cudaMemcpy(C, d_C, size, cudaMemcpyDeviceToHost);

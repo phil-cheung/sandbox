@@ -1,3 +1,4 @@
+/* Just a toy code to add two vectors of dimension n */
 #include <stdio.h>
 
 const int BLOCKSIZE = 128; 

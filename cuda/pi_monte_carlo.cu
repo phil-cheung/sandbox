@@ -1,3 +1,4 @@
+/* This code calculates Pi using Monte Carlo method */
 #include <stdio.h>
 #include <stdlib.h>
 #include <cuda.h>

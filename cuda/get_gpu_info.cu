@@ -1,4 +1,4 @@
-/* This code determines the spec of CUDA devices */
+/* This code prints out the main specs of CUDA devices important for optimizing performance */
 #include <stdio.h>
 
 int getSPcores(cudaDeviceProp devProp)
